@@ -12,7 +12,7 @@ Four reports are supported
 4. biggest_loser: number of days where a stocks close price was lower than its open price
 
 Setup
-1. create a new visrualenv
+1. create a new virtualenv
 2. pip install requirements.txt
 3. plug in your api key in config.py
 
