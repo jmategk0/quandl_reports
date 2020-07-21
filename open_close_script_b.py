@@ -9,7 +9,7 @@ report = CsvQuandlReport(
     filename=filename,
     stock_codes=DEFAULT_STOCK_CODES,
     end_date=END_DATE,
-    start_date=START_DATE
+    start_date=START_DATE,
 )
 report_results = report.report_average_open_close()
 pprint(report_results)
