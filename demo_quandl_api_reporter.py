@@ -1,11 +1,6 @@
 import argparse
 from pprint import pprint
-from config import (
-    QUANDL_API_KEY,
-    DEFAULT_STOCK_CODES,
-    START_DATE,
-    END_DATE
-)
+from config import QUANDL_API_KEY, DEFAULT_STOCK_CODES, START_DATE, END_DATE
 from quandl_reports import ApiQuandlReport
 
 # NOTE: This is a command line util for testing the live API reporting class interactively.
@@ -22,17 +17,11 @@ max_daily_profit = "max_daily_profit"
 busy_day = "busy_day"
 biggest_loser = "biggest_loser"
 
-reports_names = [
-    average_open_close,
-    max_daily_profit,
-    busy_day,
-    biggest_loser
-]
+reports_names = [average_open_close, max_daily_profit, busy_day, biggest_loser]
 
 # Error codes
 invalid_report_error = "{user_rpt} Is an invalid report name. Try: {reports}".format(
-    user_rpt=args.report_name,
-    reports=str(reports_names)
+    user_rpt=args.report_name, reports=str(reports_names)
 )
 
 # Call the API reporting class
@@ -40,7 +29,7 @@ quandl_api = ApiQuandlReport(
     api_key=QUANDL_API_KEY,
     stock_codes=DEFAULT_STOCK_CODES,
     end_date=END_DATE,
-    start_date=START_DATE
+    start_date=START_DATE,
 )
 
 # Run the report selected by the user and pprint it.

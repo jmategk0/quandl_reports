@@ -5,11 +5,13 @@ from config import PRICES_DATATABLE_CODE, QUANDL_API_KEY
 from price_table_columns import (
     PRICES_COLUMNS_TO_KEEP,
     PRICES_COLUMNS_TO_DROP,
-    OPEN_COL, CLOSE_COL,
-    HIGH_COL, LOW_COL,
+    OPEN_COL,
+    CLOSE_COL,
+    HIGH_COL,
+    LOW_COL,
     VOLUME_COL,
     TICKER_COL,
-    DATE_COL
+    DATE_COL,
 )
 
 quandl.ApiConfig.api_key = QUANDL_API_KEY
@@ -20,7 +22,6 @@ quandl.ApiConfig.api_key = QUANDL_API_KEY
 
 
 class BaseQuandlReport(object):
-
     def __init__(self, stock_codes, start_date, end_date):
         """
         This is the Base Class for all Quandl reporting tools.
@@ -66,8 +67,12 @@ class BaseQuandlReport(object):
         stock_df = self.df[self.df.ticker == stock_code]
 
         # group by open and close prices for time period
-        group_by_period_and_open = stock_df[OPEN_COL].groupby(by=stock_df.date.dt.to_period(time_period))
-        group_by_period_and_close = stock_df[CLOSE_COL].groupby(by=stock_df.date.dt.to_period(time_period))
+        group_by_period_and_open = stock_df[OPEN_COL].groupby(
+            by=stock_df.date.dt.to_period(time_period)
+        )
+        group_by_period_and_close = stock_df[CLOSE_COL].groupby(
+            by=stock_df.date.dt.to_period(time_period)
+        )
 
         # get the mean open and close
         open_means = dict(group_by_period_and_open.mean())
@@ -78,7 +83,7 @@ class BaseQuandlReport(object):
             row = {
                 "month": str(year_mo_key),
                 "average_open": round(open_means[year_mo_key], round_precision),
-                "average_close": round(close_means[year_mo_key], round_precision)
+                "average_close": round(close_means[year_mo_key], round_precision),
             }
             stock_results.append(row)
 
@@ -107,13 +112,13 @@ class BaseQuandlReport(object):
 
         # step3: profit
         # TODO: resolve pandas warning from this line
-        max_daily_profit = df_for_profit.loc[df_for_profit['daily_profit'].idxmax()]
+        max_daily_profit = df_for_profit.loc[df_for_profit["daily_profit"].idxmax()]
 
         # load report format
         results = {
             "ticker": max_daily_profit.ticker,
             "date": str(max_daily_profit.date.date()),
-            "daily_profit": round(max_daily_profit.daily_profit, round_precision)
+            "daily_profit": round(max_daily_profit.daily_profit, round_precision),
         }
         return results
 
@@ -149,7 +154,7 @@ class BaseQuandlReport(object):
                 "ticker": row[TICKER_COL],
                 "date": str(row[DATE_COL].date()),
                 "average_volume": round(mean_volume, round_precision),
-                "volume": round(row[VOLUME_COL], round_precision)
+                "volume": round(row[VOLUME_COL], round_precision),
             }
             results.append(result)
 
@@ -223,12 +228,11 @@ class BaseQuandlReport(object):
         for stock in self.stock_codes:
             report_results.append(self.get_biggest_loser(stock_code=stock))
         df_results = pd.DataFrame(report_results)
-        biggest_loser = df_results.loc[df_results['number_of_days'].idxmax()]
+        biggest_loser = df_results.loc[df_results["number_of_days"].idxmax()]
         return dict(biggest_loser)
 
 
 class ApiQuandlReport(BaseQuandlReport):
-
     def __init__(self, api_key, stock_codes, start_date, end_date):
         """
         This child reporting class is used for populating a dataframe from
@@ -258,13 +262,12 @@ class ApiQuandlReport(BaseQuandlReport):
         self.df = quandl.get_table(
             datatable_code=self.PRICES_DATATABLE_CODE,
             ticker=self.stock_codes,
-            date={'gte': self.start_date, 'lte': self.end_date},
-            qopts={'columns': PRICES_COLUMNS_TO_KEEP}
+            date={"gte": self.start_date, "lte": self.end_date},
+            qopts={"columns": PRICES_COLUMNS_TO_KEEP},
         )
 
 
 class CsvQuandlReport(BaseQuandlReport):
-
     def __init__(self, filename, stock_codes, start_date, end_date):
         """
         This child reporting class is used for populating a dataframe from
@@ -292,6 +295,7 @@ class CsvQuandlReport(BaseQuandlReport):
         raw_df = pd.read_csv(filepath_or_buffer=self.filename, parse_dates=["date"])
         df_filtered_by_code = raw_df[raw_df.ticker.isin(self.stock_codes)]
         df_filtered_by_date = df_filtered_by_code[
-            (df_filtered_by_code.date >= self.start_date) & (df_filtered_by_code.date <= self.end_date)
+            (df_filtered_by_code.date >= self.start_date)
+            & (df_filtered_by_code.date <= self.end_date)
         ]
         self.df = df_filtered_by_date.drop(PRICES_COLUMNS_TO_DROP, axis=1)

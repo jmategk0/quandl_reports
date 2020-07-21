@@ -15,7 +15,7 @@ PRICES_COLUMNS_TO_KEEP = [
     CLOSE_COL,
     HIGH_COL,
     LOW_COL,
-    VOLUME_COL
+    VOLUME_COL,
 ]
 
 EX_DIVIDEND_COL = "ex-dividend"
@@ -33,5 +33,5 @@ PRICES_COLUMNS_TO_DROP = [
     ADJ_HIGH,
     ADJ_LOW,
     ADJ_CLOSE,
-    ADJ_VOLUME
+    ADJ_VOLUME,
 ]

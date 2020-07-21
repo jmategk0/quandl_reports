@@ -1,6 +1,6 @@
 # Configuration settings for core reporting code
 
-QUANDL_API_KEY = 'yourapikey'  # don't commit a valid value!
+QUANDL_API_KEY = "yourapikey"  # don't commit a valid value!
 
 DEFAULT_STOCK_CODES = ["COF", "GOOGL", "MSFT"]
 
