@@ -2,6 +2,8 @@ from config import DEFAULT_STOCK_CODES, START_DATE, END_DATE
 from quandl_reports import CsvQuandlReport
 from pprint import pprint
 
+
+# benchmarking script, can ignore
 filename = "default_stock_codes_data.csv"
 report = CsvQuandlReport(
     filename=filename,

@@ -2,10 +2,21 @@ import pandas as pd
 import quandl
 
 from config import PRICES_DATATABLE_CODE, QUANDL_API_KEY
-from price_table_columns import (PRICES_COLUMNS_TO_KEEP, PRICES_COLUMNS_TO_DROP, OPEN_COL, CLOSE_COL, HIGH_COL, LOW_COL,
-                                 VOLUME_COL, TICKER_COL, DATE_COL)
+from price_table_columns import (
+    PRICES_COLUMNS_TO_KEEP,
+    PRICES_COLUMNS_TO_DROP,
+    OPEN_COL, CLOSE_COL,
+    HIGH_COL, LOW_COL,
+    VOLUME_COL,
+    TICKER_COL,
+    DATE_COL
+)
 
 quandl.ApiConfig.api_key = QUANDL_API_KEY
+
+# We define one base call with all the pandas reporting logic
+# Each child class implements a method to populate the dataframe
+# from a csv file or a live api call
 
 
 class BaseQuandlReport(object):
@@ -263,7 +274,7 @@ class CsvQuandlReport(BaseQuandlReport):
         
         :param filename: full filepath to a csv file with quandl data export
         :param stock_codes: A list of stock ticker codes (strings)
-        :param start_date: A string formatted date, at the start of a range
+        :param start_date: A string formatted data, at the start of a range
         :param end_date: A string formatted date, at the end of a range
         """
 

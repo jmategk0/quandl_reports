@@ -1,7 +1,11 @@
 import argparse
 from pprint import pprint
-
-from config import QUANDL_API_KEY, DEFAULT_STOCK_CODES, START_DATE, END_DATE
+from config import (
+    QUANDL_API_KEY,
+    DEFAULT_STOCK_CODES,
+    START_DATE,
+    END_DATE
+)
 from quandl_reports import ApiQuandlReport
 
 # NOTE: This is a command line util for testing the live API reporting class interactively.

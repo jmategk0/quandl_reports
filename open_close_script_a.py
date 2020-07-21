@@ -1,6 +1,13 @@
 import pandas as pd
-from price_table_columns import (PRICES_COLUMNS_TO_DROP, OPEN_COL, CLOSE_COL, TICKER_COL)
+from price_table_columns import (
+    PRICES_COLUMNS_TO_DROP,
+    OPEN_COL,
+    CLOSE_COL,
+    TICKER_COL
+)
 
+
+# benchmarking script, can ignore
 filename = "default_stock_codes_data.csv"
 stock_codes = ["COF", "GOOGL", "MSFT"]
 start_date = "2017-01-01"

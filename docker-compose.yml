@@ -1,0 +1,12 @@
+version: '3'
+
+services:
+  quandl:
+    restart: always
+    container_name: quandl-api
+    stdin_open: true
+    tty: true
+    volumes:
+    - .:/code
+    build:
+      context: .

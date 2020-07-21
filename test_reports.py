@@ -1,6 +1,17 @@
-from unittest import TestCase, TestLoader, TextTestRunner, skip
+from unittest import (
+    TestCase,
+    TestLoader,
+    TextTestRunner,
+    skip
+)
 
-from config import DEFAULT_STOCK_CODES, START_DATE, END_DATE, QUANDL_API_KEY
+from config import (
+    DEFAULT_STOCK_CODES,
+    START_DATE,
+    END_DATE,
+    QUANDL_API_KEY
+)
+
 from quandl_reports import CsvQuandlReport, ApiQuandlReport
 
 from test_results_fixtures import (
@@ -119,6 +130,7 @@ class DefaultStockCodeApiReportsTestCase(TestCase):
         )
         report_results = report.report_biggest_loser()
         self.assertEqual(report_results, expected_results)
+
 
 default_csv_test_suite = TestLoader().loadTestsFromTestCase(DefaultStockCodeCsvReportsTestCase)
 TextTestRunner(verbosity=2).run(default_csv_test_suite)
